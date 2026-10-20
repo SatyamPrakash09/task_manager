@@ -1,10 +1,11 @@
 info:
   name: delete_task
   type: http
+  seq: 1
 
 http:
   method: DELETE
-  url: ""
+  url: "{{base_url}}/api/v1/task/delete-task/6ad74dc7f233b15332dfce53"
   auth: inherit
 
 settings:
