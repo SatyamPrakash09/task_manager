@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { api } from './api'
+import ChatWidget from './ChatWidget'
 
 /* ── small helpers ─────────────────────────────────────────────── */
 function fmtDate(iso) {
@@ -258,6 +259,7 @@ export default function App() {
       )}
 
       <Toast msg={toast.msg} type={toast.type} />
+      <ChatWidget onTasksChanged={load} />
     </div>
   )
 }
