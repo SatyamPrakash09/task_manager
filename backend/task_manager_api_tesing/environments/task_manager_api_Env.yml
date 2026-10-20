@@ -1,0 +1,4 @@
+name: task_manager_api_Env
+variables:
+  - name: base_url
+    value: http://localhost:3000
