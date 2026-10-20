@@ -13,12 +13,8 @@ async def lifespan(app:FastAPI):
 app =  FastAPI(lifespan=lifespan)
 
 @app.get("/")
-async def root():
-    async with httpx.AsyncClient() as client:
-        response = await client.get("https://jsonplaceholder.typicode.com/posts")
-        return {
-            "data":response.json()
-        }
+async def root() -> dict:
+    return {"message":"Serve is running !!", "status":"ok", "running":True}
 
 app.include_router(
     task_router,
