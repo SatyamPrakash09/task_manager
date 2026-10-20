@@ -15,7 +15,7 @@ class Task(BaseModel):
 
 
 class TaskResponse(BaseModel):
-    id: str = Field(alias="_id")
+    id: str
     title: str
     complete: bool = False
     createdAt: datetime
@@ -23,11 +23,9 @@ class TaskResponse(BaseModel):
     priority: Optional[str] = None
     tags: Optional[List[str]] = Field(default_factory=list)
 
-    model_config = {"populate_by_name": True}
-
     @classmethod
     def from_mongo(cls, doc: dict) -> "TaskResponse":
-        doc["_id"] = str(doc["_id"])
+        doc["id"] = str(doc.pop("_id"))
         return cls(**doc)
 
 
