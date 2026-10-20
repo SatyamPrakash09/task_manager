@@ -41,6 +41,9 @@ class create_task_response(BaseModel):
     tags: Optional[List[str]] = Field(default_factory=list)
     
 class update_task(BaseModel):
-    title:Optional[str]
-    complete:Optional[bool]=False
+    title: Optional[str] = None
+    complete: Optional[bool] = None
+    dueDate: Optional[datetime] = None
+    priority: Optional[str] = None
+    tags: Optional[List[str]] = None
     
