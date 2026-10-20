@@ -6,14 +6,27 @@ setting = get_setting()
 
 
 
+client: AsyncIOMotorClient = None
+db = None
+
 async def startup_db_client(app):
-    app.mongodb_client = AsyncIOMotorClient(
-        setting.MONGODB_URL
-    )
-    app.mongodb = app.mongodb_client.get_database("task_manager")
+    global client, db
+    client = AsyncIOMotorClient(setting.MONGODB_URL)
+    db = client.get_database("task_manager")
+    app.mongodb_client = client
+    app.mongodb = db
     print("MongoDB Connected !!")
 
 async def shutdown_db_client(app):
-    app.mongodb_client.close()
+    global client
+    if client:
+        client.close()
     print("Database disconnected !")
+
+def get_database():
+    global client, db
+    if db is None:
+        client = AsyncIOMotorClient(setting.MONGODB_URL)
+        db = client.get_database("task_manager")
+    return db
 

@@ -44,4 +44,12 @@ class update_task(BaseModel):
     dueDate: Optional[datetime] = None
     priority: Optional[str] = None
     tags: Optional[List[str]] = None
-    
+
+
+class ChatMessage(BaseModel):
+    role: str = "user"
+    content: str
+
+
+class ChatPayload(BaseModel):
+    messages: List[Union[ChatMessage, dict, str]]

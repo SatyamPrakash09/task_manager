@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Request, status, HTTPException
-from src.models.models import create_task_response, Task, TaskResponse, update_task
+from src.models.models import create_task_response, Task, TaskResponse, update_task, ChatPayload
 from typing import List
 from bson import ObjectId
+from fastapi.responses import StreamingResponse
+import json
+from src.ai_integration.ai import send_completion_events, task_agent
 
 task_router = APIRouter(prefix="/api/v1/task")
 
@@ -56,3 +59,9 @@ async def update_task_route(id: str, request: Request, body: update_task):
     updated_task = await request.app.mongodb["tasks"].find_one({"_id": ObjectId(id)})
     return TaskResponse.from_mongo(updated_task)
     
+@task_router.post("/completion")
+async def stream(request: Request, payload: ChatPayload):
+    return StreamingResponse(
+        send_completion_events(payload.messages, task_agent=task_agent),
+        media_type="text/event-stream"
+    )

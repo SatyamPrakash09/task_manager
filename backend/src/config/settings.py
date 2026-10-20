@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Optional
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -6,6 +7,9 @@ class Settings(BaseSettings):
     PORT:int = 3000
     HOST:str = "localhost"
     RELOAD:bool=True
+    LLM:str = "gemma4:12b"
+    LLM_PROVIDER:str = "ollama"
+    LLM_API_KEY:Optional[str] = None
     
     class Config:
         env_file=".env"
